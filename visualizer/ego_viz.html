@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>MobyViz</title>
+        <script type="text/javascript" src="js/d3.js"></script>
+        <script src="https://d3js.org/d3-selection-multi.v0.4.min.js"></script>
+        <script src="js/xxhash.min.js"></script>
+        <script src="js/tooloud.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Arvo|Bungee|Spectral+SC" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="moby_viz.css"> 
+	</head>
+    <body>
+	<div class="navbar">
+    <a href="cyril_vis.html">Career Paths Multiline</a>
+    <a href="moby_viz.html">Career Lengths Lightning</a>
+    <a href="ego_viz.html" class="selected">Egocentric Career Graph</a>
+    </div>
+        <div id="controls">
+        </div>
+
+		<div id="mobygamesEgoChart"></div>
+        <script type="text/javascript" src="js/ego_viz.js"></script>
+        <script type="text/javascript">
+
+        var myEgoChart = chartEgo();
+
+		var chartEgoInstance = d3.select("#mobygamesEgoChart").call(myEgoChart);
+
+        function loadMobyVizEgoData(filename) {
+            let newdataset = d3.request("data/" + filename + ".csv")
+            .mimeType("text/plain")
+            .response(function(xhr) { return csv.parse(xhr.responseText); });
+            
+            return newdataset;
+        }
+
+        //var dataSetSidMeierEgo =
+        //loadMobyVizEgoData("sid_meier_egocentric_edges");
+        //console.log(dataSetSidMeierEgo);
+        //dataSetSidMeierEgo.get(myEgoChart.data);
+
+		var sid = d3.text("data/sid_meier_egocentric_edges_mid.csv", function(input_data) {
+			var data = d3.csvParseRows(input_data).map(function(row, index){
+				return {
+					"source":{ "id" : row[0] },
+					"target":{ "id" : row[1] },
+					"dev_id":row[3],
+					"edge_id":index
+				}
+			});
+			//console.log(data);
+			myEgoChart.data(data);
+		});
+
+		var all_dates = d3.text("data/all_dates.tsv", function(input_data) {
+			var data = d3.tsvParseRows(input_data);
+			//console.log(data.slice(0,300));
+			let data_in_map = new Map(data);
+			//console.log(data_in_map);
+			myEgoChart.date_table(data_in_map);
+		});
+		
+
+        //var dataSetAtLeast90 = loadMobyVizData("all_careers_at_least_90");
+        //var dataSetOnePercent = lsoadMobyVizData("all_careers_random_subset_1_pct_E");
+        //var dataSetTenPercent = loadMobyVizData("all_careers_random_subset_10_pct_E");
+        //var dataSetAllPercent = loadMobyVizData("all_careers_random_subset_100_pct_E");
+        
+        //dataSetAtLeast90.get(myChart.data);
+        //dataSetOnePercent.get(myChart.data);
+        //dataSetTenPercent.get(myChart.data);
+        //dataSetAllPercent.get(myChart.data);
+
+        //myChart.setStartDate();
+
+        //function changeData(data_file_name) { 
+        //data_file_name.get(myChart.data);
+        //}
+
+        </script>
+    </body>
+</html>
+
+

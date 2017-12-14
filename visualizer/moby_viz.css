@@ -1,0 +1,136 @@
+html {
+	background-color: #223344;
+    color:#FFEEEE;
+    font-family: 'Arvo', serif;
+/*font-family: 'Spectral SC', serif;
+font-family: 'Bungee', cursive;*/
+}
+
+body {
+	margin: 0;
+}
+
+h1 {
+	text-align:center;
+}
+
+.grid line, .grid path.domain {
+stroke: white;
+stroke-opacity: 0.2;
+shape-rendering: crispEdges;
+}
+
+.career_path {
+  fill: none;
+  /*stroke: steelblue;*/
+  stroke-width: 3px;
+  opacity:0.35;
+}
+
+.career_path:hover {
+	opacity:1;
+	stroke-width: 6px;
+}
+
+div.navbar {
+	display:block;
+	/*background-color: #092033;*/
+	height:2.5em;
+	overflow-y: hidden;
+	font-size: small;
+	position:relative;
+}
+
+div.navbar a {
+	border-radius: 0px 0px 0.7em 0.7em;
+    padding: 0.5em;
+    padding-top:0.7em;
+    padding-bottom:0.7em;
+    margin: 0.6em;
+    margin-right:0;
+    margin-left:0.1em;
+    margin-top:0;
+    display:inline-block;
+    background: #092033;
+    border: none;
+    color:azure;
+    text-decoration: none;
+    font-family: 'Arvo', serif; 
+}
+
+div.navbar a.selected {
+	background-color:#4455EE;
+	color:black;
+}
+
+button {
+    border-radius: 0.5em;
+    padding: 0.4em;
+    margin: 0.4em;
+    background: #4455EE;
+    border: none;
+
+}
+
+button.button_activated {
+    background-color: #98F474;
+}
+
+button:hover, div.navbar a:hover {
+    background-color: #C42335;
+}
+
+button:active, div.navbar a:active {
+    background-color: #AAFFBB;
+    color: #F45534;
+}
+
+.loading-text {
+	font-size: xx-large;
+	font-size: 6em;
+	font-family: Verdana,Geneva,sans-serif; 
+	font-color: #4455EE;
+	fill: #4455EE;
+	font-weight: bold;
+	text-align: center;
+	text-anchor: middle;
+	vertical-align: middle;
+	animation: spin 8s linear infinite;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+text.axis-label {
+	font-family: Verdana,Geneva,sans-serif; 
+	fill: #EEEEEE;
+	opacity: 0.7;
+	font-size:1.2em;
+}
+
+g.tick text {
+	fill: #D4D1FF;
+	font-size:1.4em;
+}
+
+g.axis line, g.axis path.domain {
+	stroke: #ffffff;
+	/*opacity: 0.6;*/
+}
+
+div.mobygameChart {
+	min-width: 300px;
+	width:100%;
+}

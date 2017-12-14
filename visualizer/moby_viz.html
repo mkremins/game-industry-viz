@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>MobyViz</title>
+        <script type="text/javascript" src="js/d3.js"></script>
+        <script src="https://d3js.org/d3-selection-multi.v0.4.min.js"></script>
+        <script src="js/xxhash.min.js"></script>
+        <script src="js/tooloud.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Arvo|Bungee|Spectral+SC" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="moby_viz.css">
+        <style>
+		</style>
+		<style> /* set the CSS */
+
+
+</style>
+	</head>
+    <body>
+	<div class="navbar">
+    <a href="cyril_vis.html">Career Paths Multiline</a>
+    <a href="moby_viz.html"  class="selected">Career Lengths Lightning</a>
+    <a href="ego_viz.html">Egocentric Career Graph</a>
+    </div>
+    <h1>Career Lengths Lightning Chart</h1>
+        <div id="controls">
+            <label for="careerStartYear">
+            Career Year = <span id="careerStartYear-value">1973</span>
+            </label>
+            <input type="range" min="1973" max="2017" value="1973" id="careerStartYear">
+            <label for="careerRange">
+            Viewing Range = <span id="careerRange-value">1</span>
+            </label>
+            <input type="range" min="1" max="48" value="1"
+            id="careerRange">
+            <div style="display:inline-block;">
+               <button id="careerPlayButton" name="careerPlayButton">Stopped</button>
+               <!--<button id="careerShowGamesButton" name="careerShowGamesButton">Games Hidden</button>-->
+               <button id="careerAggregateButton" name="careerShowGamesButton">Showing Aggregate Count</button>
+
+            
+            </div>
+        </div>
+
+		<div id="mobygamesChart"></div>
+        <script type="text/javascript" src="js/moby_viz.js"></script>
+        <script type="text/javascript">
+
+        var myChart = chartLine();
+
+		var chartInstance = d3.select("#mobygamesChart").call(myChart);
+
+        function loadMobyVizData(filename) {
+            let newdataset = d3.request("data/" + filename + ".json")
+        .mimeType("application/json")
+        .response(function(xhr) { return JSON.parse(xhr.responseText); });
+            return newdataset;
+        }
+
+        //var dataSetAtLeast90 = loadMobyVizData("all_careers_at_least_90");
+        var dataSetOnePercent = loadMobyVizData("all_careers_random_subset_1_pct_E");
+        //var dataSetTenPercent = loadMobyVizData("all_careers_random_subset_10_pct_E");
+        //var dataSetAllPercent = loadMobyVizData("all_careers_random_subset_100_pct_E");
+        
+        //dataSetAtLeast90.get(myChart.data);
+        dataSetOnePercent.get(myChart.data);
+        //dataSetTenPercent.get(myChart.data);
+        //dataSetAllPercent.get(myChart.data);
+
+        //myChart.setStartDate();
+
+function changeData(data_file_name) { 
+        data_file_name.get(myChart.data);
+}
+
+        </script>
+    </body>
+</html>
+
+
