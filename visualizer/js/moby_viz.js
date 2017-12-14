@@ -14,9 +14,9 @@ var chartLine = function() {
     var previous_data = {};
 	var margin = {
 		top: 10,
-		left: 60,
+		left: 70,
 		right: 15,
-		bottom: 45,
+		bottom: 55,
 		axis_padding: 10
 	};
 
@@ -35,7 +35,7 @@ var chartLine = function() {
 	var xScale = d3.scaleTime();
 	var xScaleDate = d3.scaleTime();
 	var xScaleOrdinal = d3.scaleOrdinal();
-	var yScale = d3.scaleLinear();
+	var yScale = d3.scaleSqrt();
 	var cScale = d3.scaleSequential(d3.interpolateRainbow);
 	var cScaleDate = d3.scaleTime();
 
@@ -46,7 +46,7 @@ var chartLine = function() {
 
 
 	function makeYGridlines() {
-        return d3.axisLeft(yScale).ticks((chart_use_aggregate ? 30 : 3));
+        return d3.axisLeft(yScale).ticks((chart_use_aggregate ? 30 : 20));
     }
 
 	function chart(selection) {
@@ -56,7 +56,7 @@ var chartLine = function() {
 
 		var dom = d3.select("body");
 		var svg = dom.append("svg")
-		.attr("class", "chart")
+		.attr("class", "chart centered")
 		.attr("id", "careerChart")
 		.attr("height", height)
 		.attr("width", width);
@@ -72,7 +72,7 @@ var chartLine = function() {
 		cScale.domain([0,1000]);
 
 		yScale
-				.domain([0,50])
+				.domain([1,50])
 				.range([height - margin.bottom, 0 + margin.top]);
 
 		var chartArea = svg.append("g").attr("id","chartArea");
@@ -103,7 +103,7 @@ var chartLine = function() {
 
 		var xAxisLabel = svg.append("text")
 		.attr("class", "axis-label")
-		.attr("transform", "translate(" + (width / 2) + "," + (height - margin.bottom + 38) + ")")
+		.attr("transform", "translate(" + (width / 2) + "," + (height - margin.bottom + 48) + ")")
 		.style("text-anchor", "middle")
 		.text("Career Start Date");
 
@@ -111,8 +111,8 @@ var chartLine = function() {
 		.attr("class", "axis-label")
 		.attr("transform", "rotate(-90)")
 		.attr("y", 0)
-		.attr("x", 0 - (height / 2))
-		.attr("dy", "1em")
+		.attr("x", 20 + (0 - (height / 2)))
+		.attr("dy", "1.3em")
 		.style("text-anchor", "middle")
 		.text("Games Worked On");
 
@@ -157,7 +157,7 @@ var chartLine = function() {
 				.range([0 + margin.left, width - margin.right]);
 
 			yScale
-				.domain([0, (chart_use_aggregate ? 500 : 50) ])
+				.domain([(chart_use_aggregate ? 1 : 1), (chart_use_aggregate ? 500 : 50) ])
 				.range([ height - margin.bottom, 0 + margin.top]);
 
 			xAxis
@@ -181,7 +181,7 @@ var chartLine = function() {
 			xAxisLabel
 			.transition()
 			.duration(transition_speed)
-			.attr("transform", "translate(" + (width / 2) + "," + (height - margin.bottom + 38) + ")");
+			.attr("transform", "translate(" + (width / 2) + "," + (height - margin.bottom + 48) + ")");
 
 
 			let chart_rows = chartArea.selectAll("career_path");//, getCareerKey);
