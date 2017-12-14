@@ -98,15 +98,21 @@ d3.tsv("data/role_types.tsv", function(error, mapping) {  //role_id, role_type_i
                 update(temp);
             }
             else
-                update(filterOut(data1, 'role_id', "T12", mapping));
+                update(filterOut(data1, 'role_id', "NOFILTER", mapping));
         })
 
-    update(filterOut(data1, 'role_id', "T12", mapping));
+	// As it turns out, filtering out the RNone roles is misleading because it removes roles that are listed correctly but somehow don't have to role tag set correctly
+    update(data1); 
+
+    function compareDates(a, b) {
+    	console.log(": " + (a) + " " + (b) + " = " + ((a) - (b)));
+    	return (a) - (b);
+    }
 
     function update(data) {
         var devs = d3.nest()
-            .key(function(d) { return d.dev_id })
-            .sortValues(function(a, b) { return a.year - b.year})
+        	.key(function(d) { return d.dev_id }).sortKeys(d3.ascending)
+        	.sortValues(function(a,b) {return d3.ascending(a.year, b.year);})
             .entries(data);
 
         x.domain(d3.extent(data1, function(d) { return parseTime(new Date(d.year).getFullYear()); }));
