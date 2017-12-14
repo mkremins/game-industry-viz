@@ -35,10 +35,11 @@ shape-rendering: crispEdges;
 div.navbar {
 	display:block;
 	/*background-color: #092033;*/
-	height:2.5em;
-	overflow-y: hidden;
+	overflow: auto;
 	font-size: small;
 	position:relative;
+	width:100%;
+	min-width: 546px;
 }
 
 div.navbar a {
@@ -55,12 +56,20 @@ div.navbar a {
     border: none;
     color:azure;
     text-decoration: none;
-    font-family: 'Arvo', serif; 
+    font-family: 'Arvo', serif;
+    top:0;
+    vertical-align:top;
+    transition: all 0.3 ease-in-out;
 }
 
 div.navbar a.selected {
+	padding-top:1.1em;
 	background-color:#4455EE;
-	color:black;
+	color: aliceblue;
+	/*border-bottom: 3px #223344 solid;
+	border-left: 3px #223344 solid;
+	border-right: 3px #223344 solid;*/
+	box-shadow: inset #1122bb 0 -2px 35px 3px;
 }
 
 button {
@@ -69,7 +78,7 @@ button {
     margin: 0.4em;
     background: #4455EE;
     border: none;
-
+	font-family: 'Arvo', serif;
 }
 
 button.button_activated {
@@ -79,6 +88,12 @@ button.button_activated {
 button:hover, div.navbar a:hover {
     background-color: #C42335;
 }
+
+div.navbar a:hover {
+    padding-top:1.1em;
+    transition: all 0.3 ease-in-out;
+}
+
 
 button:active, div.navbar a:active {
     background-color: #AAFFBB;
