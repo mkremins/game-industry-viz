@@ -19,7 +19,8 @@
 <h1>Career Path Multiline Timeseries Graph</h1>
 
 <svg width="960" height="500"></svg>
-<select id="dropdown">
+<div class="centered">
+<select id="dropdown" class="centered">
     <option value="all" selected="selected">all</option>
     <option value="T1">programming</option>
     <option value="T2">design</option>
@@ -34,9 +35,10 @@
     <option value="T11">cinematics</option>
     <option value="T12">other</option>
 </select>
+</div>
 <script>
 
-var svg = d3.select("svg"),
+var svg = d3.select("svg").attr("class","centered"),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
@@ -71,7 +73,9 @@ var tooltip = d3.select("body")
     .append("div")
     .style("position", "absolute")
     .style("visibility", "hidden")
-    .style("background", "white");
+    .style("background", "white")
+    .style("color","black")
+    .style("padding","0.2em");
 
 var dropdown = d3.select('#dropdown');
 
