@@ -330,7 +330,7 @@ var chartLine = function() {
 		});
 		chartdata = newval;
 
-		if (typeof updateData === 'function') resizeChart(chartdata);
+		if (typeof resizeChart === 'function') resizeChart(chartdata);
 		return chart;
 	}
 

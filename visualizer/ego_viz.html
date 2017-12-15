@@ -14,8 +14,9 @@
 	<div class="navbar">
     <a href="cyril_vis.html">Career Paths Multiline</a>
     <a href="moby_viz.html">Career Lengths Lightning</a>
-    <a href="ego_viz.html" class="selected">Egocentric Career Graph</a>
+    <a href="ego_viz.html" class="selected">Egocentric Collaboration Graph</a>
     </div>
+    <h1>The careers of all the developers credited on the game Aquaria</h1>
         <div id="controls">
         </div>
 
@@ -40,7 +41,7 @@
         //console.log(dataSetSidMeierEgo);
         //dataSetSidMeierEgo.get(myEgoChart.data);
 
-		var sid = d3.text("data/sid_meier_egocentric_edges_mid.csv", function(input_data) {
+		var sid = d3.text("data/sid_meier_egocentric_edges_small.csv", function(input_data) {
 			var data = d3.csvParseRows(input_data).map(function(row, index){
 				return {
 					"source":{ "id" : row[0] },
@@ -50,15 +51,37 @@
 				}
 			});
 			//console.log(data);
-			myEgoChart.data(data);
+			//myEgoChart.data(data);
 		});
 
-		var all_dates = d3.text("data/all_dates.tsv", function(input_data) {
+		var all_dates = d3.text("data/all_dates_and_names.tsv", function(input_data) {
 			var data = d3.tsvParseRows(input_data);
 			//console.log(data.slice(0,300));
-			let data_in_map = new Map(data);
+			//let data_in_map = new Map(data);
+			let data_in_map = data.reduce(function(a_map, obj) {
+				a_map[obj[0]] = [obj[1], obj[2]];
+				return a_map;
+			}, {})
 			//console.log(data_in_map);
 			myEgoChart.date_table(data_in_map);
+		});
+
+		var all_careers = d3.json("data/all_careers_brief.json", function(input_data) {
+			myEgoChart.career_table(input_data);
+		});
+
+		var active_careers = d3.text("data/ego_devs.tsv", function(input_data) {
+			var data = d3.csvParseRows(input_data).map(function(row, index){
+				return row[0];
+			});
+			myEgoChart.active_devs(data);
+		});
+
+		var active_games = d3.text("data/ego_games.tsv", function(input_data) {
+			var data = d3.csvParseRows(input_data).map(function(row, index){
+				return row[0];
+			});
+			myEgoChart.active_games(data);
 		});
 		
 

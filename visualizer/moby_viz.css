@@ -32,6 +32,10 @@ shape-rendering: crispEdges;
 	stroke-width: 6px;
 }
 
+.careerpath: hover {
+	stroke-width: 6px;
+}
+
 div.navbar {
 	display:block;
 	/*background-color: #092033;*/
@@ -69,7 +73,7 @@ div.navbar a.selected {
 	/*border-bottom: 3px #223344 solid;
 	border-left: 3px #223344 solid;
 	border-right: 3px #223344 solid;*/
-	box-shadow: inset #1122bb 0 -2px 2px 3px;
+	box-shadow: inset #4455EE 0 -2px 0px 3px;
 }
 
 button {
