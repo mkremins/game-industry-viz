@@ -52,5 +52,5 @@ pulled from that developer’s appearance in games credits.
 
 ## To Run
 
-1. Put the datfiles in the `/visualizer/data` directory.
+1. Put the datafiles in the `/visualizer/data` directory.
 2. Start a webserver in the `/visualizer` directory and access one of the html pages.
