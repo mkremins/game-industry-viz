@@ -256,7 +256,7 @@ var chartEgo = function() {
 
 			console.log(filtered_games)
 			let career_path_line = d3.line()
-			.curve(d3.curveCardinal)
+			.curve(d3.curveMonotoneX)
 			.x(function(d, i, dat) { 
 				let output = filtered_games.find(z => z.game_id == d); 
 				return (undefined != output.x) ? output.x : 0; 
