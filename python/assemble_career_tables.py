@@ -94,17 +94,31 @@ def careersToJSON(targetfile, sourcefile):
 
 def careersToTable(targetfile, sourcefile):
     with open('./' + targetfile, 'w+', encoding='utf8', newline='\n') as target:
+        #writer = csv.writer(target, delimiter='\t')
+        developer_map = {}
         with open('./' + sourcefile, 'rt', encoding='utf8',newline='') as source:
             tsvin = csv.reader(source, delimiter='\t')
             last_dev = False
-            last_game_id = ""
             this_devs_games = set()
             for entry in tsvin:
+                padded_game_id = entry[0]
+                game_id = 'G' + str(int(padded_game_id[1:]) - 10000000)
+                this_devs_games.add(game_id)
                 if (entry[1] == last_dev):
-                    print('.', end='')
-                if entry[0] == last_game_id:
-                    print(entry[8])
+                    #print(entry[1])
+                    padded_game_id = entry[0]
+                    game_id = 'G' + str(int(padded_game_id[1:]) - 10000000)
+                    this_devs_games.add(game_id)
                 else:
+                    print(this_devs_games)
+                    developer_map.update({("D" + str(int(entry[1][1:]) - 10000000)): list(this_devs_games)})
+                    this_devs_games = set()
+                    last_dev = entry[1]
+                    padded_game_id = entry[0]
+                    game_id = 'G' + str(int(padded_game_id[1:]) - 10000000)
+                    this_devs_games.add(game_id)
+        json.dump(developer_map, target, indent=1)
+                    
                 
     
                 
@@ -121,15 +135,16 @@ def datesToJSON(targetfile, sourcefile):
                 game_id = 'G' + str(int(padded_game_id[1:]) - 10000000)
                 if(not(game_id in listed_games)):
                     listed_games.append(game_id)
-                    writer.writerow([game_id, entry[3]])
-                    print([game_id, entry[3]])
+                    writer.writerow([game_id, entry[3], entry[6]])
+                    print([game_id, entry[3], entry[6]])
 
     
 
    
 #sortCareerTables()    
 #careersToJSON('all_careers_random_subset_100_pct_E.json', 'all_careers_sorted.tsv')
-datesToJSON('all_dates.tsv', 'all_careers_sorted.tsv')
+datesToJSON('all_dates_and_names.tsv', 'all_careers_sorted.tsv')
+#careersToTable('all_careers_brief.tsv', 'all_careers_sorted.tsv')
 print("done")            
         
 
