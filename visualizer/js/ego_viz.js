@@ -143,6 +143,7 @@ var chartEgo = function() {
 		.attr("class", "loader")
 		.attr("transform", "translate(" + (chart_width  / 2) + "," + (chart_height / 2) + ")" );
 			
+
 		updateWidth = function() {
 			updateData(chartdata);
 
@@ -237,7 +238,7 @@ var chartEgo = function() {
 			node
 			.append("circle")
 			.attr("r", "7")
-			.attr("fill", "red");
+			.attr("fill", "#96B8EE");
 
 			node
 			.append('title')
@@ -250,18 +251,19 @@ var chartEgo = function() {
 			.append("line")
 			.style("opacity", 0)
 			.attr("stroke","white")
-			.attr("stroke-width","2");
+			//.attr("stroke-width","2")
+			;
 
 			console.log(filtered_games)
 			let career_path_line = d3.line()
-			.curve(d3.curveMonotoneX)
+			.curve(d3.curveCardinal)
 			.x(function(d, i, dat) { 
 				let output = filtered_games.find(z => z.game_id == d); 
 				return (undefined != output.x) ? output.x : 0; 
 			})
 			.y(function(d, i, dat) {
 				let output = filtered_games.find(z => z.game_id == d); 
-				return (undefined != output.y) ? output.y + ( 10 * perlin_noise.noise(dat.length * 0.04, 0.2, 0.001)) : 0; 
+				return (undefined != output.y) ? output.y + ( 20 * perlin_noise.noise(dat.length * 0.04, 0.2, 0.001)) : 0; 
 			});
 
 			console.log(career_path_data);
@@ -275,8 +277,9 @@ var chartEgo = function() {
 			.attr("stroke-width","2")
 			.attr("stroke", function(d) { return randomColor(); })
 			.attr('d', career_path_line)
-			.append("title")
-			.text(function(d) { return String(d) + "\n" + String("");});
+			;
+			//.append("title")
+			//.text(function(d) { return String(d) + "\n" + String("");});
 			
 
 
