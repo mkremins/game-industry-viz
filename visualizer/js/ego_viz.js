@@ -91,15 +91,8 @@ var chartEgo = function() {
     var viewStartDate = parseTime("1995");
     var viewEndDate = parseTime("1974");
 
-/*	function makeYGridlines() {
-        return d3.axisLeft(yScale).ticks((chart_use_aggregate ? 30 : 3));
-    }
-    */
 
 	function chart(selection) {
-
-	    //let use_aggregate_count = true;
-	    //let display_circles = false;
 
 		var dom = d3.select("body");
 		var svg = dom.append("svg")
@@ -133,37 +126,12 @@ var chartEgo = function() {
 	    	.attr("transform", "translate(0," + ((chart_height - margin.bottom)) + ")")
       		.call(d3.axisBottom(xScaleDate).ticks(12))
       		      		;
-/*
-		// Add the gridlines
-        var gridlines = svg.append("g")
-        	.attr("stroke", "#fff")
-            .attr("class", "grid")
-            .attr("transform", "translate(" + (margin.left) + ",0)")
-            .call(makeYGridlines().tickSize(-(chart_width - (margin.left + margin.right))).tickFormat(""));
-
-  		// Add the Y Axis
-  		var yAxis = svg.append("g")
-  			.attr("stroke", "#fff")
-	    	.attr("opacity", "0.6")
-  			.attr("class", "axis")
-  			.attr("transform", "translate(" + (margin.left) + ",0)")
-			.call(d3.axisLeft(yScale));
-*/
 		var xAxisLabel = svg.append("text")
 		.attr("class", "axis-label")
 		.attr("transform", "translate(" + (chart_width / 2) + "," + (chart_height - margin.bottom + 38) + ")")
 		.style("text-anchor", "middle")
 		.text("Game Release Date");
-/*
-		var yAxisLabel = svg.append("text")
-		.attr("class", "axis-label")
-		.attr("transform", "rotate(-90)")
-		.attr("y", 0)
-		.attr("x", 0 - (chart_height / 2))
-		.attr("dy", "1em")
-		.style("text-anchor", "middle")
-		.text("Games Worked On");
-*/
+
 		var loadingText = svg.append("g")
 		.attr("transform", "translate(" + (chart_width  / 2) + "," + (chart_height / 2) + ")" );
 		loadingText
@@ -175,11 +143,6 @@ var chartEgo = function() {
 		.attr("class", "loader")
 		.attr("transform", "translate(" + (chart_width  / 2) + "," + (chart_height / 2) + ")" );
 			
-
-		//var getCareerKey = function(d) {
-		//	return d[0].dev_id;
-		//};
-
 		updateWidth = function() {
 			updateData(chartdata);
 
@@ -187,11 +150,6 @@ var chartEgo = function() {
 		updateHeight = function() {
 			updateData(chartdata);
 		}
-
-		//var sim = d3.forceSimulation()
-		//.force("link", d3.forceLink().id(function (d) {return d.edge_id;}).distance(100).strength(1))
-        //.force("charge", d3.forceManyBody())
-        //.force("center", d3.forceCenter(chart_width / 2, chart_height / 2));;
 
         let link_base = svg.append("g")
 			.attr("class", "links");
@@ -224,33 +182,6 @@ var chartEgo = function() {
 			if(!active_devs) { return; }
 			console.log("All Files Loaded");
 
-			//console.log(chartdata);
-			//console.log(games_set);
-			//console.log(career_table);
-			//let career_path_data = career_table;
-			//Object.keys(career_table).map(function(key) {
-			//	return 0;//{'id': key, 'games': career_table[key] };
-			//});
-			//console.log(date_table);
-			//console.log(active_games);
-			//console.log(active_devs);
-
-			//function filterTables(table, allowed) {
-			//	console.log(table);
-			//	console.log(allowed);
-			//	let results = Object.keys(table)
-			//	.filter(key => allowed.includes(key))
-			//	.reduce(function(obj, key) {
-			//		console.log(key, table.get(key));
-			//		obj[key] = table.get(key);
-			//		return obj;
-			//	}, {});
-			//	return results;
-			//}
-
-			//let filtered_games = filterTables(date_table, active_games);
-			//let filtered_careers = filterTables(career_table, active_devs);
-
 			let filtered_games = Array.from(Object.keys(date_table))
 			.filter(key => active_games.includes(key))
 			.reduce(function(obj, key) {
@@ -266,19 +197,11 @@ var chartEgo = function() {
 				return obj;
 			}, {});
 
-			//console.log(filtered_games);
-			//console.log(filtered_careers);
-
-			
 
 			function sortCareerByDates(career_array) {
 				let sorted_career = career_array.sort(function (a, b) {
-					//console.log(filtered_games.find(z => z.game_id == a).date,
-					//			filtered_games.find(z => z.game_id == b).date);
 					return filtered_games.find(z => z.game_id == a).date - filtered_games.find(z => z.game_id == b).date;
 				});
-				//console.log(sorted_career);
-				//return career_array;
 				return sorted_career;
 			}
 
@@ -303,9 +226,6 @@ var chartEgo = function() {
 				career_path_data.push({'id':element,'games': a_career})
 				return a_career;
 			})
-
-
-			//console.log(chart_link_data);
 
 			var node = node_base
 			.selectAll(".node")
@@ -387,15 +307,6 @@ var chartEgo = function() {
 				})
 				;
 
-				//path_base.selectAll(".career_paths")
-				//.data(career_path_data)
-				//.attr('d',
-				//	 d3.line()
-				//	.curve(d3.curveMonotoneX)
-			//			.x(function(d) {return 200;})
-			//			.y(function(d) {return 150})
-			//	);
-
 			path_base.selectAll(".careerpath")
 			.data(career_path_data.map(dev => dev.games))
 			.attr('d', career_path_line);
@@ -407,111 +318,6 @@ var chartEgo = function() {
 			simulate.force("link", d3.forceLink(chart_link_data).id(function(d){  return d.game_id; }));
 			//simulate.restart();
 
-			//path_base.selectAll(".career_paths")
-			//	.data(career_path_data)
-			//	.attr('d',
-			//		 d3.line()
-			//			.curve(d3.curveMonotoneX)
-			//			.x(function(d) { console.log(d); return 200;})
-			//			.y(function(d) {return 150})
-			//	);
-
-			//chart_link_data.forEach(function(d) {
-			//	console.log(d);
-			//	console.log(filtered_games.find(z => z.game_id == d.source.game_id));
-			//})
-
-			//filtered_games.forEach(function(a_game) {
-			//		//console.log(a_game, a_game.date, xScale(a_game.date));
-			//		//a_game.x = xScale(a_game.date);
-			//		//a_game.y = 100;
-			//});
-
-
-/*
-			var link = link_base
-			.selectAll("line")
-			.data(chartdata)
-			.enter()
-			.append("line")
-			.attr("stroke","white")
-			.attr("stroke-width","2");
-
-			//console.log(games_set);
-			//console.log(devs_set);
-
-			var node = node_base
-			.selectAll(".node")
-			.data(games_set)
-			.enter()
-			.append("g")
-			.attr("class",'node');
-
-			node
-			.append("circle")
-			.attr("r", "5")
-			.attr("fill", "red");
-
-			node
-			.append('title')
-			.text(function(d) { return d.id});
-
-			function ticked() {
-				link
-				.attr("x1", function(d) { return games_set.find(z => z.id == d.source.id).x; })
-				.attr("y1", function(d) { return games_set.find(z => z.id == d.source.id).y; })
-				.attr("x2", function(d) { return games_set.find(z => z.id == d.target.id).x; })
-				.attr("y2", function(d) { return games_set.find(z => z.id == d.target.id).y; })
-				;
-
-			  	node
-			  	.attr('transform', function(d) { return "translate(" + d.x +"," + d.y + ")";});
-			}
-
-			simulate.nodes(games_set).on("tick", ticked);
-			simulate.force("link").links(chartdata);
-
-			//let links = svg.selectAll(".link")
-			//.data(...chartdata)
-			//.enter()
-			//.append("line")
-			//.attr("class","link")
-			//.attr("marker-end","url(#arrowhead)");
-
-			//links.append("title")
-			//.text(function(d) {return d.dev_id});
-
-			//console.log([...devs_set]);
-
-			//let nodes = svg.selectAll(".node")
-			//.data(devs_set)
-			//.enter()
-			//.append('g')
-			//.attr("class",'node')
-			//.call(d3.drag()
-			//.on('start', dragStart)
-			//.on('drag', dragging)
-			//)
-			//;
-
-			//nodes.append('circle')
-			//.attr('r', 5)
-			//.style('fill', "red");
-
-			//nodes.append('title')
-			//.text(function(d) { return d});
-
-
-
-
-			//sim.nodes(nodes)
-			//.on('tick', ticked);
-
-			//console.log(chartdata);
-			//console.log(devs_set);
-
-			//sim.force("link").links(links);
-			*/
 
 			loadingText.text("");
 		}
@@ -576,33 +382,6 @@ var chartEgo = function() {
 		if (typeof updateData === 'function') resizeChart(chartdata);
 		return chart;
 	}
-
-    /*
-	updateDateRangeStart = function(newCareerStartDate, newCareerRange) {
-        let newCareerEndDate = parseInt(newCareerStartDate) + parseInt(newCareerRange);
-        if(parseInt(newCareerEndDate) < (parseInt(newCareerStartDate) + 1)) {
-            newCareerEndDate = parseInt(newCareerStartDate) + 1;
-        }
-		d3.select("#careerStartYear-value").text(newCareerStartDate);
-		d3.select("#careerStartYear").property("value", newCareerStartDate);
-
-        d3.select("#careerRange-value").text(newCareerRange);
-		d3.select("#careerRange").property("value", newCareerRange);
-
-		viewStartDate = parseTime(newCareerStartDate.toString());
-		viewEndDate = parseTime((newCareerEndDate).toString()); 
-		//resizeChart();
-		updateData(chartdata);
-    }
-
-	d3.select("#careerStartYear").on("input", function() { 
-		updateDateRangeStart(+document.getElementById("careerStartYear").value, +document.getElementById("careerRange").value)});
-
-    d3.select("#careerRange").on("input", function() { 
-		updateDateRangeStart(+document.getElementById("careerStartYear").value, +document.getElementById("careerRange").value)});
-
-    let playAnimation = 0;
-    */
 
     var chartElement = document.getElementById("mobygamesEgoChart");
 
